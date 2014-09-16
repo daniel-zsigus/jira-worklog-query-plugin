@@ -378,7 +378,7 @@ public class WorklogQueryResource<V> {
      *             If ParserException when parse the startDate.
      */
     private JSONObject createWorklogJSONObject(final ResultSet rs, final List<StringList> fields) throws JSONException,
-    SQLException, ParseException {
+            SQLException, ParseException {
         JSONObject jsonWorklog = new JSONObject();
         jsonWorklog.put("id", rs.getLong("id"));
 
@@ -537,8 +537,8 @@ public class WorklogQueryResource<V> {
             @DefaultValue("0") @QueryParam("startAt") int startAt,
             @DefaultValue("25") @QueryParam("maxResults") int maxResults,
             @DefaultValue("emptyFieldValue") @QueryParam("fields") final List<StringList> fields)
-            throws
-            URISyntaxException, SQLException {
+                    throws
+                    URISyntaxException, SQLException {
 
         checkRequiredFindWorklogsByIssuesParameter(startDate, endDate, user, group);
 
@@ -757,8 +757,8 @@ public class WorklogQueryResource<V> {
      */
     private Response worklogQuery(final Calendar startDate, final Calendar endDate, final String userString,
             final String groupString, final String projectString, final List<StringList> fields, final boolean updated)
-                    throws DataAccessException,
-                    SQLException, JSONException, ParseException {
+            throws DataAccessException,
+            SQLException, JSONException, ParseException {
 
         List<JSONObject> worklogs = new ArrayList<JSONObject>();
 
@@ -849,13 +849,9 @@ public class WorklogQueryResource<V> {
                 return a > b ? +1 : a < b ? -1 : 0;
             }
         });
-        JSONArray jsonArrayResult = new JSONArray();
-        jsonArrayResult.put(worklogs);
-        return Response.ok(jsonArrayResult.toString()).build();
 
-        // 2.0.0
-        // JSONObject jsonResult = new JSONObject();
-        // jsonResult.put("worklogs", worklogs);
-        // return Response.ok(jsonResult.toString()).build();
+        JSONObject jsonResult = new JSONObject();
+        jsonResult.put("worklogs", worklogs);
+        return Response.ok(jsonResult.toString()).build();
     }
 }
